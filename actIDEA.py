@@ -11,43 +11,21 @@ current_directory = os.getcwd()
 # 构建文件路径
 file_path = os.path.join(current_directory, file_name)
 
-# JetBrains软件的名称
-jetbrains_software_names = [
-    "IntelliJ IDEA",
-    "PyCharm",
-    "WebStorm",
-    "PhpStorm",
-    "CLion",
-    "Rider",
-    "RubyMine",
-    "AppCode",
-    "DataGrip",
-    "GoLand",
-    "JetBrains DataSpell",
-    "JetBrains Fleet",
-    "JetBrains Gateway",
-    "JetBrains Gateway Client",
-    "JetBrains Gateway Server",
-]
-
-
-# 获取所有JetBrains软件的安装路径
+# 获取JetBrains软件的安装路径
 def get_jetbrains_installation_paths():
     paths = []
     try:
         # 打开注册表项
-        key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
-                             r"SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall")
+        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                             r"Software\Microsoft\Windows\CurrentVersion\Uninstall")
         for i in range(0, winreg.QueryInfoKey(key)[0]):
             sub_key_name = winreg.EnumKey(key, i)
             sub_key = winreg.OpenKey(key, sub_key_name)
             try:
-                display_name, _ = winreg.QueryValueEx(sub_key, "DisplayName")
-                for software_name in jetbrains_software_names:
-                    if software_name in display_name:
-                        install_location, _ = winreg.QueryValueEx(sub_key, "InstallLocation")
-                        paths.append(install_location)
-                        break
+                publisher, _ = winreg.QueryValueEx(sub_key, "Publisher")
+                if publisher == "JetBrains s.r.o.":
+                    install_location, _ = winreg.QueryValueEx(sub_key, "InstallLocation")
+                    paths.append(install_location)
             except FileNotFoundError:
                 pass
             finally:
@@ -58,10 +36,8 @@ def get_jetbrains_installation_paths():
         key.Close()
     return paths
 
-
 def show_message(message):
     ctypes.windll.user32.MessageBoxW(0, message, '提示', 0)
-
 
 if os.path.isfile(file_path):
     # 获取文件的绝对路径
