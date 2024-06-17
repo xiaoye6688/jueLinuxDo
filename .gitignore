@@ -4,3 +4,5 @@
 ja-netfilter/
 dist/
 .vscode/
+build/
+*.spec
