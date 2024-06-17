@@ -1,2 +1,5 @@
-./ja-netfilter
-./idea
+# 初始化.gitignore文件
+.idea/
+*.iml
+ja-netfilter/
+dist/
