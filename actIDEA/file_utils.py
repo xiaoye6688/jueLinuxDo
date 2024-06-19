@@ -21,13 +21,13 @@ def modify_vmoptions_files(paths, absolute_path):
                             not any(
                                 '--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED' in line for line
                                 in lines):
+                        f.seek(0, os.SEEK_END)
                         f.write(
                             '\n--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED\n'
                             '--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED\n\n'
                             f'-javaagent:{absolute_path}\n'
                         )
                         modified_paths.append(file_path)
-                        break
                     else:
                         f.seek(0)
                         lines = [line for line in lines if '-javaagent:' not in line]
@@ -37,9 +37,12 @@ def modify_vmoptions_files(paths, absolute_path):
                                  '--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED' not in line]
                         f.truncate(0)
                         f.writelines(lines)
-                        f.write(f'-javaagent:{absolute_path}\n')
+                        f.write(
+                            '--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED\n'
+                            '--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED\n'
+                            f'-javaagent:{absolute_path}\n'
+                        )
                         modified_paths.append(file_path)
-                        break
     return modified_paths
 
 
@@ -71,5 +74,4 @@ def restore_vmoptions_files(paths):
                         f.truncate(0)
                         f.writelines(lines)
                         restored_paths.append(file_path)
-                        break
     return restored_paths
