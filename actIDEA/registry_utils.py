@@ -18,6 +18,7 @@ jetbrains_software_names = [
     "JetBrains Gateway Server",
 ]
 
+
 def get_jetbrains_installation_paths_package():
     jetAppPaths = []
     try:
@@ -43,6 +44,7 @@ def get_jetbrains_installation_paths_package():
     finally:
         key.Close()
     return jetAppPaths
+
 
 def get_jetbrains_installation_paths_toolbox():
     jetAppPaths = []
