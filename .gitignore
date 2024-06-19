@@ -6,3 +6,9 @@ dist/
 .vscode/
 build/
 *.spec
+*.jar
+*.conf
+*.exe
+*.pdf
+*.pyc
+actIDEA/sha1sum.txt
