@@ -39,7 +39,7 @@ def modify_vmoptions_files(paths, absolute_path):
                         f.writelines(lines)
                         f.write(
                             '--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED\n'
-                            '--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED\n'
+                            '--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED\n\n'
                             f'-javaagent:{absolute_path}\n'
                         )
                         modified_paths.append(file_path)
