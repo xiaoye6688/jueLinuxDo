@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        oaifree自动获取F2A
+// @name        oaifree自动获取2FA
 // @namespace   Violentmonkey Scripts
 // @match       https://token.oaifree.com/auth*
 // @grant       none
