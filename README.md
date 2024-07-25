@@ -15,6 +15,8 @@
 
   或手动打开[https://jbls.ide-soft.com/](https://jbls.ide-soft.com/) 使用linuxdo账号登录，获取激活码，填入激活码即可激活。
 
+> 注：该方案来自linuxdo佬友youku，软件仅供学习交流使用，请于24小时内删除，不得用于商业用途，否则后果自负。
+
 ## Tools
   - osPath
     - 这是一个用于将路径转换为文本或将文本转换为路径的小工具，适用于GPT等人工智能无法读取整个项目的情况。
@@ -40,5 +42,5 @@
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/Refresh_tokenToAccess_token)
   
 
-## Stargazers over time
+## star
 [![Stargazers over time](https://starchart.cc/xiaoye6688/jueLinuxDo.svg?variant=adaptive)](https://starchart.cc/xiaoye6688/jueLinuxDo)
