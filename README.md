@@ -21,6 +21,13 @@
     - 使用方法如下：
       - 下载并解压名为osPath.exe的文件，双击运行，选择需要转换为文本的文件夹或在文本框中输入特定格式的路径，点击`读取目录结构并复制`或`根据文本创建目录`即可。
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/osPath)
+  - RefreshToToken
+    - 这是一个用于将chatGPT的refresh_token转换为access_token的小工具，适用于在access_token过期后使用refresh_token重新获取access_token
+    - 使用始皇的`https://token.oaifree.com/api/auth/refresh`接口
+    - 可批量转换多个refresh_token，但是还没想好复制的时候应该复制为什么格式，所以暂时只支持单个复制
+    - 使用方法如下：
+      - 下载并解压名为RefreshToToken.rar的文件，双击运行RefreshToToken.exe，输入refresh_token，点击`获取access_token`即可。
+      - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/Refresh_tokenToAccess_token)
   
 
 ## Stargazers over time
