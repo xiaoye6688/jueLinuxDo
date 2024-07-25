@@ -13,7 +13,7 @@
 
 - 文件修改后打开你的jetbrains软件，在激活链接处填入`https://jbls.ide-soft.com/`
 
-  或手动打开https://jbls.ide-soft.com/使用linuxdo账号登录，获取激活码，填入激活码即可激活。
+  或手动打开[https://jbls.ide-soft.com/](https://jbls.ide-soft.com/) 使用linuxdo账号登录，获取激活码，填入激活码即可激活。
 
 ## Tools
   - osPath
