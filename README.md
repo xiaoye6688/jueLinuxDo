@@ -21,6 +21,16 @@
     - 使用方法如下：
       - 下载并解压名为osPath.exe的文件，双击运行，选择需要转换为文本的文件夹或在文本框中输入特定格式的路径，点击`读取目录结构并复制`或`根据文本创建目录`即可。
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/osPath)
+      - 目录结构示例
+        ```
+            example_directory/
+            ├── folder1/
+            │   ├── file1.txt
+            │   ├── file2.txt
+            ├── folder2/
+            │   ├── subfolder1/
+            │   │   ├── file3.txt
+        ```
   - RefreshToToken
     - 这是一个用于将chatGPT的refresh_token转换为access_token的小工具，适用于在access_token过期后使用refresh_token重新获取access_token
     - 使用始皇的`https://token.oaifree.com/api/auth/refresh`接口
