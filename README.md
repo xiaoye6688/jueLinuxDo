@@ -46,6 +46,7 @@
     - 使用方法如下：
       - 下载名为mixueToken.rar的文件，双击运行mixueToken.exe，输入手机号，点击`获取验证码`，输入验证码，点击`获取token`即可。
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/mixueToken)
+      - 懒得下载！！极简方式：https://mixue.020906.xyz/
   
 
 ## star
