@@ -40,6 +40,12 @@
     - 使用方法如下：
       - 下载名为RefreshToToken.rar的文件，双击运行RefreshToToken.exe，输入refresh_token，点击`获取access_token`即可。
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/Refresh_tokenToAccess_token)
+
+  - mixueToken
+    - 这是一个通过短信验证码获取蜜雪冰城token的小工具，虽丑但用
+    - 使用方法如下：
+      - 下载名为mixueToken.rar的文件，双击运行mixueToken.exe，输入手机号，点击`获取验证码`，输入验证码，点击`获取token`即可。
+      - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/mixueToken)
   
 
 ## star
