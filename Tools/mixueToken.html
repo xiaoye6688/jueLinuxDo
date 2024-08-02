@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>蜜雪Token获取</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/js-base64@3.7.7/base64.min.js"></script>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+    <script src="./base64.min.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -180,7 +180,7 @@ MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDbC4pjJol4HdEkdMS+GrmGBjZl6YJQ
                     */
                     if (data.code === 0 && data.data.accessToken) {
                         const token = data.data.accessToken;
-                        document.getElementById('token').innerText = formatToken(token);
+                        document.getElementById('token').innerText = token;
                         alert('Token获取成功');
                     } else {
                         alert('Token获取失败: ' + data.message);
@@ -189,14 +189,6 @@ MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDbC4pjJol4HdEkdMS+GrmGBjZl6YJQ
                 .catch(error => {
                     alert('Token获取失败: ' + error.message);
                 });
-        }
-
-        function formatToken(token, lineLength = 40) {
-            let formattedToken = '';
-            for (let i = 0; i < token.length; i += lineLength) {
-                formattedToken += token.slice(i, i + lineLength) + '\n';
-            }
-            return formattedToken.trim();
         }
 
         function copyToClipboard() {
