@@ -1,0 +1,21 @@
+proxies:
+  - name: "Internxt VPN"
+    type: http
+    server: "dihgihw.internxt.com"
+    port: 8083
+    username: "internxt"
+    password: "pass"
+    tls: true
+
+proxy-groups:
+  - name: "Proxy"
+    type: select
+    proxies:
+      - "Internxt VPN"
+
+rules:
+  - DOMAIN-SUFFIX,google.com,Proxy
+  - DOMAIN-KEYWORD,google,Proxy
+  - DOMAIN-SUFFIX,ad.com,REJECT
+  - GEOIP,CN,DIRECT
+  - MATCH,Proxy
