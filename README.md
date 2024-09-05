@@ -7,7 +7,7 @@
 
 - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/v2.1.1)
 
-- [蓝奏云](https://ww0.lanzoub.com/iVslF25j05fc)
+- [蓝奏云](https://wwse.lanzoub.com/iSRoC299gpxa)
 
 - 将解压后的文件夹放在任意位置，双击运行actIDEA.exe，选择需要修改的jetbrains产品，点击激活。
 
