@@ -1,6 +1,9 @@
 import winreg
+import os
+import fnmatch
 
 jetbrains_software_names = [
+    "Idea",
     "IntelliJ IDEA",
     "PyCharm",
     "WebStorm",
@@ -11,11 +14,11 @@ jetbrains_software_names = [
     "AppCode",
     "DataGrip",
     "GoLand",
-    "JetBrains DataSpell",
-    "JetBrains Fleet",
-    "JetBrains Gateway",
-    "JetBrains Gateway Client",
-    "JetBrains Gateway Server",
+    "DataSpell",
+    "Fleet",
+    "Gateway",
+    "Gateway Client",
+    "Gateway Server",
 ]
 
 
@@ -32,7 +35,8 @@ def get_jetbrains_installation_paths_package():
                 display_name, _ = winreg.QueryValueEx(sub_key, "DisplayName")
                 for software_name in jetbrains_software_names:
                     if software_name in display_name:
-                        install_location, _ = winreg.QueryValueEx(sub_key, "InstallLocation")
+                        install_location, _ = winreg.QueryValueEx(
+                            sub_key, "InstallLocation")
                         jetAppPaths.append((display_name, install_location))
                         break
             except FileNotFoundError:
@@ -58,8 +62,10 @@ def get_jetbrains_installation_paths_toolbox():
             try:
                 publisher, _ = winreg.QueryValueEx(sub_key, "Publisher")
                 if publisher == "JetBrains s.r.o.":
-                    display_name, _ = winreg.QueryValueEx(sub_key, "DisplayName")
-                    install_location, _ = winreg.QueryValueEx(sub_key, "InstallLocation")
+                    display_name, _ = winreg.QueryValueEx(
+                        sub_key, "DisplayName")
+                    install_location, _ = winreg.QueryValueEx(
+                        sub_key, "InstallLocation")
                     jetAppPaths.append((display_name, install_location))
             except FileNotFoundError:
                 pass
@@ -69,4 +75,19 @@ def get_jetbrains_installation_paths_toolbox():
         pass
     finally:
         key.Close()
+    return jetAppPaths
+
+
+def get_jetbrains_installation_paths_appdata():
+    jetAppPaths = []
+    appdata_path = os.getenv('APPDATA')
+    base_path = os.path.join(appdata_path, "JetBrains")
+    if os.path.exists(base_path):
+        for item in os.listdir(base_path):
+            item_path = os.path.join(base_path, item)
+            if os.path.isdir(item_path):
+                for software_name in jetbrains_software_names:
+                    if fnmatch.fnmatchcase(item.lower(), f"*{software_name.lower()}*"):
+                        jetAppPaths.append((item, item_path))
+                        break
     return jetAppPaths

@@ -4,7 +4,7 @@ import os
 def modify_vmoptions_files(paths, absolute_path):
     modified_paths = []
     for path in paths:
-        path = path.replace('\\', '/') + '/bin'
+        path = path.replace('\\', '/')
         file_list = os.listdir(path)
         # 获取以vmoptions结尾且文件名不包含client的文件并修改，在文件末尾添加
         # --add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED
@@ -30,7 +30,8 @@ def modify_vmoptions_files(paths, absolute_path):
                         modified_paths.append(file_path)
                     else:
                         f.seek(0)
-                        lines = [line for line in lines if '-javaagent:' not in line]
+                        lines = [
+                            line for line in lines if '-javaagent:' not in line]
                         lines = [line for line in lines if
                                  '--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED' not in line]
                         lines = [line for line in lines if
@@ -49,7 +50,7 @@ def modify_vmoptions_files(paths, absolute_path):
 def restore_vmoptions_files(paths):
     restored_paths = []
     for path in paths:
-        path = path.replace('\\', '/') + '/bin'
+        path = path.replace('\\', '/')
         file_list = os.listdir(path)
         for file in file_list:
             if file.endswith('.vmoptions') and 'client' not in file:
@@ -62,7 +63,8 @@ def restore_vmoptions_files(paths):
                             any('--add-opens=java.base/jdk.internal.org.objectweb.asm.tree=ALL-UNNAMED' in line for line
                                 in lines):
                         # 移除不需要的行
-                        lines = [line for line in lines if '-javaagent:' not in line]
+                        lines = [
+                            line for line in lines if '-javaagent:' not in line]
                         lines = [line for line in lines if
                                  '--add-opens=java.base/jdk.internal.org.objectweb.asm=ALL-UNNAMED' not in line]
                         lines = [line for line in lines if
