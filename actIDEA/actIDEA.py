@@ -37,6 +37,36 @@ if os.path.isfile(file_path):
                 else:
                     show_message("没有软件的vmoptions文件被修改")
             elif action == "restore":
+                # 解析selected_paths，'C:\\Users\\xiaoy\\AppData\\Roaming\\JetBrains\\WebStorm2024.2'，获取最后一个\\之后的路径并去掉版本号(类似2024.2)
+                # 对idea进行特殊处理，idea只保留idea
+                selected_paths_temp = []
+
+                for path in selected_paths:
+                    if 'idea' in path.lower():
+                        selected_paths_temp.append('idea')
+                    else:
+                        path = path.replace("\\", "/")
+                        path = path.split("/")[-1]
+                        path = path.split("20")[0]
+                        selected_paths_temp.append(path)
+
+                # 调用get_jetbrains_installation_paths_package和get_jetbrains_installation_paths_toolbox获取所有的安装路径
+                all_paths_old = get_jetbrains_installation_paths_package(
+                ) + get_jetbrains_installation_paths_toolbox()
+                # 遍历all_paths_old，模糊匹配selected_paths_temp中的路径，将匹配到的路径添加/bin 并添加到selected_paths
+                # all_paths_old:  [('IntelliJ IDEA 2024.1.4', 'D:\\Program Files\\JetBrains\\IntelliJ IDEA 2024.1.4'), ('PhpStorm 2024.1.1', 'D:\\Program Files\\JetBrains\\PhpStorm 2024.1.1'), ('PyCharm 2024.1.4', 'D:\\Program Files\\JetBrains\\PyCharm 2024.1.4'), ('WebStorm 2024.1.1', 'D:\\Program Files\\JetBrains\\WebStorm 2024.1.1')]
+                print('all_paths_old: ', all_paths_old)
+                for path in all_paths_old:
+                    for selected_path_index_value in selected_paths_temp:
+
+                        if selected_path_index_value.lower() in path[0].lower():
+                            print('selected_path_index_value: ',
+                                  selected_path_index_value)
+                            print('path[0]: ', path[0])
+                            selected_paths.append(path[1] + '\\bin')
+
+                print('selected_paths_temp: ', selected_paths_temp)
+                print('selected_paths: ', selected_paths)
                 restored_paths = restore_vmoptions_files(selected_paths)
                 if restored_paths:
                     show_message(f"成功还原了以下软件的vmoptions文件:\n" +
