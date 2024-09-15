@@ -41,12 +41,12 @@
       - 下载名为RefreshToToken.rar的文件，双击运行RefreshToToken.exe，输入refresh_token，点击`获取access_token`即可。
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/Refresh_tokenToAccess_token)
 
-  - mixueToken
-    - 这是一个通过短信验证码获取蜜雪冰城token的小工具，虽丑但用
-    - 使用方法如下：
-      - 下载名为mixueToken.rar的文件，双击运行mixueToken.exe，输入手机号，点击`获取验证码`，输入验证码，点击`获取token`即可。
-      - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/mixueToken)
-      - 懒得下载！！极简方式：https://mixue.020906.xyz/
+## Internxt VPN.yaml
+  - 这是一个由L站佬友逆向的chrome插件Internxt VPN的配置进行简单修改后的配置，目前还能用，但是不保证以后还能用
+  - 使用方法如下：
+    - 下载名为Internxt VPN.yaml的文件，导入到clash中即可使用
+    - 或直接使用链接导入订阅`https://raw.githubusercontent.com/xiaoye6688/jueLinuxDo/main/Internxt%20VPN.yaml`
+    - cloudflare workers订阅链接`https://vpn.xiaoye6688.me/`
   
 
 ## star
