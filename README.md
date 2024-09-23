@@ -40,6 +40,10 @@
     - 使用方法如下：
       - 下载名为RefreshToToken.rar的文件，双击运行RefreshToToken.exe，输入refresh_token，点击`获取access_token`即可。
       - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/Refresh_tokenToAccess_token)
+  
+  - IAS_zh_cn.cmd
+    - IAS的汉化版本，激活某*DM下载器
+    - 下载名为IAS_zh_cn.cmd的文件，双击运行，根据提示操作即可。
 
 ## Internxt VPN.yaml
   - 这是一个由L站佬友逆向的chrome插件Internxt VPN的配置进行简单修改后的配置，目前还能用，但是不保证以后还能用
