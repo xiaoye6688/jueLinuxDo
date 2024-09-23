@@ -44,6 +44,7 @@
   - IAS_zh_cn.cmd
     - IAS的汉化版本，激活某*DM下载器
     - 下载名为IAS_zh_cn.cmd的文件，双击运行，根据提示操作即可。
+    - github地址：[IAS_zh_cn](https://github.com/xiaoye6688/jueLinuxDo/blob/main/Tools/IAS_zh_cn.cmd) | [单击下载](https://raw.githubusercontent.com/xiaoye6688/jueLinuxDo/refs/heads/main/Tools/IAS_zh_cn.cmd)
 
 ## Internxt VPN.yaml
   - 这是一个由L站佬友逆向的chrome插件Internxt VPN的配置进行简单修改后的配置，目前还能用，但是不保证以后还能用
