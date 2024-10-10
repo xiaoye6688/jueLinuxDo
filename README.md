@@ -53,7 +53,7 @@
   - 使用方法如下：
     - 下载名为Internxt VPN.yaml的文件，导入到clash中即可使用
     - 或直接使用链接导入订阅`https://raw.githubusercontent.com/xiaoye6688/jueLinuxDo/main/Internxt%20VPN.yaml`
-    - cloudflare workers订阅链接`https://vpn.xiaoye6688.me/`
+    - cloudflare workers订阅链接`https://vpn.020906.xyz/`
   
 
 ## star
