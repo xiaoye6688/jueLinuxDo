@@ -3,8 +3,8 @@
 // @namespace   Violentmonkey Scripts
 // @match       https://new.oaifree.com/*
 // @grant       none
-// @version     2.4
-// @description 2024/10/31 简洁美观UI
+// @version     2.7
+// @description 2024/10/31 增加日志显示功能
 // @license MIT
 // ==/UserScript==
 
@@ -36,7 +36,6 @@ style.innerHTML = `
         border-radius: 10px;
         background: #f9f9f9;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        width: 280px;
         padding: 12px;
         z-index: 99999999;
         font-family: Arial, sans-serif;
@@ -82,10 +81,23 @@ style.innerHTML = `
     }
     .username-container {
         display: inline-block;
-        width: 100px; /* 固定宽度 */
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        color: #333;
+    }
+    .rt-log {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: none;
     }
 `;
 document.head.appendChild(style);
@@ -99,6 +111,27 @@ var title = document.createElement('div');
 title.className = 'rt-title';
 title.innerHTML = '账户管理';
 
+// 日志显示容器
+var logDiv = document.createElement('div');
+logDiv.className = 'rt-log';
+container.appendChild(logDiv);
+
+// 显示日志函数
+function showLog(message, isError = false) {
+    logDiv.innerText = message;
+    logDiv.style.backgroundColor = isError ? 'rgba(255, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.75)';
+    logDiv.style.display = 'block';
+    logDiv.style.opacity = '1';
+
+    // 3秒后隐藏日志
+    setTimeout(() => {
+        logDiv.style.opacity = '0';
+        setTimeout(() => {
+            logDiv.style.display = 'none';
+        }, 300); // 与过渡效果同步
+    }, 3000);
+}
+
 // 添加输入框和按钮容器
 var inputContainer = document.createElement('div');
 inputContainer.className = 'rt-input-container';
@@ -110,12 +143,24 @@ refreshTokenInput.placeholder = 'refresh_token';
 var addButton = document.createElement('button');
 addButton.className = 'rt-button';
 addButton.innerHTML = '添加RT';
-addButton.onclick = function () {
+addButton.onclick = async function () {
     var refreshToken = refreshTokenInput.value.trim();
     if (refreshToken) {
-        users.push({ username: '临时名字', refresh_token: refreshToken });
-        localStorage.setItem('users', JSON.stringify(users));
-        renderUserList();
+        showLog('添加中...');
+        try {
+            const accessToken = await fetchAccessToken(refreshToken);
+            const email = extractEmail(accessToken);
+
+            if (email) {
+                users.push({ username: email, refresh_token: refreshToken, access_token: accessToken });
+                localStorage.setItem('users', JSON.stringify(users));
+                renderUserList();
+                showLog('添加成功');
+            }
+        } catch (error) {
+            showLog('添加失败', true);
+            console.error('添加用户时出错:', error);
+        }
         refreshTokenInput.value = '';
     }
 };
@@ -128,12 +173,29 @@ inputContainer.appendChild(addButton);
 var ul = document.createElement('ul');
 ul.className = 'rt-list';
 
+// 获取最大用户名长度
+function getMaxUsernameWidth() {
+    const testDiv = document.createElement('div');
+    testDiv.className = 'username-container';
+    testDiv.style.position = 'absolute';
+    testDiv.style.visibility = 'hidden';
+    document.body.appendChild(testDiv);
+
+    let maxWidth = 100;
+    users.forEach(user => {
+        testDiv.innerText = user.username;
+        maxWidth = Math.max(maxWidth, testDiv.scrollWidth);
+    });
+
+    document.body.removeChild(testDiv);
+    return maxWidth;
+}
+
 function adjustFontSize(container, text) {
-    let fontSize = 13; // 初始字体大小
+    let fontSize = 13;
     container.style.fontSize = fontSize + 'px';
     container.innerText = text;
 
-    // 检查内容宽度是否超出容器宽度
     while (container.scrollWidth > container.clientWidth && fontSize > 10) {
         fontSize--;
         container.style.fontSize = fontSize + 'px';
@@ -142,26 +204,47 @@ function adjustFontSize(container, text) {
 
 function renderUserList() {
     ul.innerHTML = '';
+    const maxUsernameWidth = getMaxUsernameWidth();
+    const containerWidth = maxUsernameWidth + 200; // 留出按钮的空间
+
+    container.style.width = containerWidth + 'px';
+
     users.forEach(function (user, index) {
         var li = document.createElement('li');
         li.className = 'rt-list-item';
 
-        // 用户名显示容器
         var usernameContainer = document.createElement('div');
         usernameContainer.className = 'username-container';
-
-        // 调整字体大小以适应宽度
+        usernameContainer.style.width = maxUsernameWidth + 'px';
         adjustFontSize(usernameContainer, user.username);
 
-        // 选择按钮
         var selectButton = document.createElement('button');
         selectButton.className = 'rt-button';
         selectButton.innerHTML = '选择';
         selectButton.onclick = function () {
-            getToken(user.refresh_token);
+            // 使用已有的 access_token，而不是重新获取
+            showLog('选择用户中...');
+            getToken(user.access_token);
+            showLog('选择成功');
         };
 
-        // 删除按钮
+        var refreshButton = document.createElement('button');
+        refreshButton.className = 'rt-button';
+        refreshButton.innerHTML = '刷新';
+        refreshButton.onclick = async function () {
+            showLog('刷新中...');
+            try {
+                const newAccessToken = await fetchAccessToken(user.refresh_token);
+                user.access_token = newAccessToken;
+                localStorage.setItem('users', JSON.stringify(users));
+                showLog('刷新成功');
+                console.log('Access token 已刷新:', newAccessToken);
+            } catch (error) {
+                showLog('刷新失败', true);
+                console.error('刷新 access token 失败:', error);
+            }
+        };
+
         var deleteButton = document.createElement('button');
         deleteButton.className = 'rt-button';
         deleteButton.innerHTML = '删除';
@@ -169,10 +252,12 @@ function renderUserList() {
             users.splice(index, 1);
             localStorage.setItem('users', JSON.stringify(users));
             renderUserList();
+            showLog('删除成功');
         };
 
         li.appendChild(usernameContainer);
         li.appendChild(selectButton);
+        li.appendChild(refreshButton);
         li.appendChild(deleteButton);
         ul.appendChild(li);
     });
@@ -187,22 +272,35 @@ document.body.appendChild(container);
 // 渲染用户列表
 renderUserList();
 
-// 获取token的函数
-async function getToken(refreshToken) {
+// 通过refresh_token获取access_token
+async function fetchAccessToken(refreshToken) {
+    const response = await fetch('https://token.oaifree.com/api/auth/refresh', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: `refresh_token=${encodeURIComponent(refreshToken)}`
+    });
+
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const result = await response.json();
+    return result.access_token;
+}
+
+// 从access_token中提取email
+function extractEmail(accessToken) {
     try {
-        const response = await fetch('https://token.oaifree.com/api/auth/refresh', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: `refresh_token=${encodeURIComponent(refreshToken)}`
-        });
+        const payload = JSON.parse(atob(accessToken.split('.')[1]));
+        return payload["https://api.openai.com/profile"].email || '未知用户';
+    } catch (error) {
+        console.error('解码access_token时出错:', error);
+        return '未知用户';
+    }
+}
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const result = await response.json();
-        const accessToken = result.access_token;
-        console.log('access_token:', accessToken);
-
+// 获取token的函数
+async function getToken(accessToken) {
+    try {
         const url = 'https://new.oaifree.com/auth/login_token';
         const data = `action=token&access_token=${encodeURIComponent(accessToken)}`;
         console.log('请求数据:', data);
@@ -219,9 +317,9 @@ async function getToken(refreshToken) {
         const loginResult = await loginResponse.json();
         console.log('响应数据:', loginResult);
 
-        // 跳转到指定页面
         window.location.href = 'https://new.oaifree.com/';
     } catch (error) {
+        showLog('获取 token 失败', true);
         console.error('获取token失败:', error);
     }
 }
