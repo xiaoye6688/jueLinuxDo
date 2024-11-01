@@ -1,15 +1,18 @@
 // ==UserScript==
 // @name        rt自动转at
 // @namespace   Violentmonkey Scripts
-// @match       https://new.oaifree.com/*
+// @match       https://new.oaifree.com/auth/login_auth0*
 // @grant       none
-// @version     2.7
-// @description 2024/10/31 增加日志显示功能
+// @version     2.0
+// @description 2024/10/31 功能基本完善
 // @license MIT
 // ==/UserScript==
 
 // 初始化用户数据
 var users = JSON.parse(localStorage.getItem('users')) || [];
+
+// 读取上次保存的窗口位置
+var savedPosition = JSON.parse(localStorage.getItem('containerPosition')) || { top: 20, left: 20 };
 
 // 创建样式
 var style = document.createElement('style');
@@ -30,8 +33,8 @@ style.innerHTML = `
     }
     .rt-container {
         position: fixed;
-        top: 20px;
-        left: 20px;
+        top: ${savedPosition.top}px;
+        left: ${savedPosition.left}px;
         border: 1px solid #ddd;
         border-radius: 10px;
         background: #f9f9f9;
@@ -45,6 +48,7 @@ style.innerHTML = `
         font-weight: 600;
         color: #333;
         margin-bottom: 10px;
+        cursor: move;
     }
     .rt-list {
         list-style: none;
@@ -115,6 +119,39 @@ title.innerHTML = '账户管理';
 var logDiv = document.createElement('div');
 logDiv.className = 'rt-log';
 container.appendChild(logDiv);
+
+// 让容器可拖动
+let isDragging = false;
+let offsetX, offsetY;
+
+title.addEventListener('mousedown', (event) => {
+    isDragging = true;
+    offsetX = event.clientX - container.offsetLeft;
+    offsetY = event.clientY - container.offsetTop;
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', onStopDrag);
+});
+
+function onDrag(event) {
+    if (isDragging) {
+        container.style.left = `${event.clientX - offsetX}px`;
+        container.style.top = `${event.clientY - offsetY}px`;
+    }
+}
+
+function onStopDrag() {
+    isDragging = false;
+    // 保存位置
+    localStorage.setItem(
+        'containerPosition',
+        JSON.stringify({
+            top: parseInt(container.style.top),
+            left: parseInt(container.style.left)
+        })
+    );
+    document.removeEventListener('mousemove', onDrag);
+    document.removeEventListener('mouseup', onStopDrag);
+}
 
 // 显示日志函数
 function showLog(message, isError = false) {
@@ -222,7 +259,6 @@ function renderUserList() {
         selectButton.className = 'rt-button';
         selectButton.innerHTML = '选择';
         selectButton.onclick = function () {
-            // 使用已有的 access_token，而不是重新获取
             showLog('选择用户中...');
             getToken(user.access_token);
             showLog('选择成功');
