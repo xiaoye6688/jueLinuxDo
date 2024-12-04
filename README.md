@@ -55,16 +55,5 @@
     - 或直接使用链接导入订阅`https://raw.githubusercontent.com/xiaoye6688/jueLinuxDo/main/Internxt%20VPN.yaml`
     - cloudflare workers订阅链接`https://vpn.020906.xyz/`
 
-## TokenForOaifree.js
-  - 这是一个用于将chatGPT的refresh_token转换为access_token的油猴脚本，在Pandor界面使用，适用于在access_token过期后使用refresh_token重新获取access_token
-  - 支持存储多个rt和其对应的at，方便多账户切换，如果你在网址规则中添加 [https://new.oaifree.com/](https://new.oaifree.com/) ，他甚至可以在你的聊天界面快速切换多个账户
-  - 使用始皇的`https://token.oaifree.com/api/auth/refresh`接口，全程无需科学上网（请保证自己可以访问[token.oaifree.com](https://token.oaifree.com)）
-  - 若提示错误（添加/刷新）失败请关闭科学上网后再试
-  - 使用方法如下：
-    - 打开[https://greasyfork.org/zh-CN/scripts/500442-rt自动转at](https://greasyfork.org/zh-CN/scripts/500442-rt%E8%87%AA%E5%8A%A8%E8%BD%ACat)安装脚本即可
-    - [从github下载](https://github.com/xiaoye6688/jueLinuxDo/blob/main/linuxDo.js)
-    - 效果如下图
-    - <img src="img/TokenForOaifree.png" alt="效果图" style="zoom:67%;" />
-
 ## star记录
 [![Stargazers over time](https://starchart.cc/xiaoye6688/jueLinuxDo.svg?variant=adaptive)](https://starchart.cc/xiaoye6688/jueLinuxDo)
