@@ -5,7 +5,7 @@
 这是一个用于激活jetbrains系列的工具，目前仅适用于windows系统，使用方法如下：
 - 下载并解压名为actIDEA.rar的激活整合包
 
-- [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/v2.1.1)
+- [从github下载](https://github.com/xiaoye6688/jueLinuxDo/releases/tag/v2.1.2)
 
 - [蓝奏云](https://wwse.lanzoub.com/iSRoC299gpxa)
 
