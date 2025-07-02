@@ -60,4 +60,4 @@
 
 ## 本项目 CDN 加速及安全防护由 Tencent EdgeOne 赞助
 
-[![EdgeOne]([https://dartnode.com/branding/DN-Open-Source-sm.png](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png))](https://edgeone.ai/zh?from=github)
+[![EdgeOne](https://edgeone.ai/media/34fe3a45-492d-4ea4-ae5d-ea1087ca7b4b.png)](https://edgeone.ai/zh?from=github)
