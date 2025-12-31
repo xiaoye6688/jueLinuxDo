@@ -1,0 +1,15 @@
+[package]
+name = "launcher"
+version = "0.1.0"
+edition = "2021"
+build = "build.rs"
+
+[build-dependencies]
+winres = "0.1"
+
+[profile.release]
+opt-level = "z"     # 最小体积优化
+lto = true          # 链接时优化
+strip = true        # 移除符号
+panic = "abort"     # 减小体积
+codegen-units = 1   # 更好的优化
